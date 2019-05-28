@@ -2,7 +2,7 @@ package model;
 
 import java.math.BigDecimal;
 
-public class Produto {
+public class Produto extends Model {
 	private Long codProduto;
 	private String descProduto;
 	private BigDecimal valorCompra;
@@ -46,12 +46,6 @@ public class Produto {
 
 	public void setFornecedor(Fornecedor fornecedor) {
 		this.fornecedor = fornecedor;
-	}
-
-	@Override
-	public String toString() {
-		return "Produto [codProduto=" + codProduto + ", descProduto=" + descProduto + ", valorCompra=" + valorCompra
-				+ ", fornecedor=" + fornecedor + "]";
 	}
 
 }

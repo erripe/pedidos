@@ -2,7 +2,7 @@ package model;
 
 import java.sql.Date;
 
-public class Estoque {
+public class Estoque extends Model {
 	private Long codEstoque;
 	private Date dataAtualizacao;
 
@@ -26,11 +26,6 @@ public class Estoque {
 
 	public void setDataAtualizacao(Date dataAtualizacao) {
 		this.dataAtualizacao = dataAtualizacao;
-	}
-
-	@Override
-	public String toString() {
-		return "Estoque [codEstoque=" + codEstoque + "]";
 	}
 
 }

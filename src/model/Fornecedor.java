@@ -1,20 +1,18 @@
 package model;
 
-public class Fornecedor {
+public class Fornecedor extends Model {
 	private Long codFornecedor;
-	private String cnpj;
 	private String descFornecedor;
-	private String telefone;
+	private String cnpj;
 	private String email;
 	private Endereco endereco;
 
-	public Fornecedor(Long codFornecedor, String cnpj, String descFornecedor, String telefone, String email,
+	public Fornecedor(Long codFornecedor, String cnpj, String descFornecedor, String email,
 			Endereco endereco) {
 		super();
 		this.codFornecedor = codFornecedor;
 		this.cnpj = cnpj;
 		this.descFornecedor = descFornecedor;
-		this.telefone = telefone;
 		this.email = email;
 		this.endereco = endereco;
 	}
@@ -43,14 +41,6 @@ public class Fornecedor {
 		this.descFornecedor = descFornecedor;
 	}
 
-	public String getTelefone() {
-		return telefone;
-	}
-
-	public void setTelefone(String telefone) {
-		this.telefone = telefone;
-	}
-
 	public String getEmail() {
 		return email;
 	}
@@ -65,12 +55,6 @@ public class Fornecedor {
 
 	public void setEndereco(Endereco endereco) {
 		this.endereco = endereco;
-	}
-
-	@Override
-	public String toString() {
-		return "Fornecedor [codFornecedor=" + codFornecedor + ", cnpj=" + cnpj + ", descFornecedor=" + descFornecedor
-				+ ", telefone=" + telefone + ", email=" + email + "]";
 	}
 
 }

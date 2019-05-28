@@ -16,7 +16,6 @@ public class Database {
 
 	public Database() {
 		super();
-		//jdbc:mysql://localhost/
 		this.driverClass = "com.mysql.cj.jdbc.Driver";
 		this.caminho = "jdbc:mysql://localhost/sistemaVendas?useTimezone=true&serverTimezone=UTC";
 		this.user = "root";

@@ -3,14 +3,14 @@ package model;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class Venda {
+public class Venda extends Model {
 	private Long codVenda;
 	private Comanda comanda;
 	private BigDecimal precoTotal;
 	private Date dataVenda;
-	private VldStatusVenda vldStatusVenda;
+	private EStatusVenda vldStatusVenda;
 
-	public Venda(Long codVenda, Comanda comanda, BigDecimal precoTotal, Date dataVenda, VldStatusVenda vldStatusVenda) {
+	public Venda(Long codVenda, Comanda comanda, BigDecimal precoTotal, Date dataVenda, EStatusVenda vldStatusVenda) {
 		super();
 		this.codVenda = codVenda;
 		this.comanda = comanda;
@@ -51,21 +51,15 @@ public class Venda {
 		this.dataVenda = dataVenda;
 	}
 
-	public VldStatusVenda getVldStatusVenda() {
+	public EStatusVenda getVldStatusVenda() {
 		return vldStatusVenda;
 	}
 
-	public void setVldStatusVenda(VldStatusVenda vldStatusVenda) {
+	public void setVldStatusVenda(EStatusVenda vldStatusVenda) {
 		this.vldStatusVenda = vldStatusVenda;
 	}
 
-	@Override
-	public String toString() {
-		return "Venda [codVenda=" + codVenda + ", comanda=" + comanda + ", precoTotal=" + precoTotal + ", dataVenda="
-				+ dataVenda + ", vldStatusVenda=" + vldStatusVenda + "]";
-	}
-
-	private enum VldStatusVenda {
+	private enum EStatusVenda {
 		ABERTA(0), PAGA(1);
 
 		private int value;
@@ -74,7 +68,7 @@ public class Venda {
 			return this.value;
 		}
 
-		private VldStatusVenda(int i) {
+		private EStatusVenda(int i) {
 			this.value = i;
 		}
 	}

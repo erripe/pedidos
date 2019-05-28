@@ -1,10 +1,14 @@
 package model;
 
-public class Comanda {
-	private Long codComanda;
-	private vldStatusComanda vldLivre;
+import annotation.Field;
 
-	public Comanda(Long codComanda, vldStatusComanda vldLivre) {
+public class Comanda extends Model {
+
+	@Field(field = "COD_COMANDA")
+	private Long codComanda;
+	private EStatusComanda vldLivre;
+
+	public Comanda(Long codComanda, EStatusComanda vldLivre) {
 		super();
 		this.codComanda = codComanda;
 		this.vldLivre = vldLivre;
@@ -18,15 +22,15 @@ public class Comanda {
 		this.codComanda = codComanda;
 	}
 
-	public vldStatusComanda getVldLivre() {
+	public EStatusComanda getVldLivre() {
 		return vldLivre;
 	}
 
-	public void setVldLivre(vldStatusComanda vldLivre) {
+	public void setVldLivre(EStatusComanda vldLivre) {
 		this.vldLivre = vldLivre;
 	}
 
-	private enum vldStatusComanda {
+	private enum EStatusComanda {
 		LIVRE(0), OCUPADA(1);
 
 		private int value;
@@ -35,14 +39,9 @@ public class Comanda {
 			return this.value;
 		}
 
-		private vldStatusComanda(int i) {
+		private EStatusComanda(int i) {
 			this.value = i;
 		}
-	}
-
-	@Override
-	public String toString() {
-		return "Comanda [codComanda=" + codComanda + ", vldLivre=" + vldLivre + "]";
 	}
 
 }

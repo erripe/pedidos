@@ -1,6 +1,6 @@
 package model;
 
-public class Endereco {
+public class Endereco extends Model {
 	private Long codEndereco;
 	private String cep;
 	private String logadouro;
@@ -85,12 +85,6 @@ public class Endereco {
 
 	public void setCidade(String cidade) {
 		this.cidade = cidade;
-	}
-
-	@Override
-	public String toString() {
-		return "Endereco [codEndereco=" + codEndereco + ", cep=" + cep + ", logadouro=" + logadouro + ", num=" + num
-				+ ", uf=" + uf + ", pais=" + pais + ", bairro=" + bairro + ", cidade=" + cidade + "]";
 	}
 
 }

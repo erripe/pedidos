@@ -2,7 +2,7 @@ package model;
 
 import java.math.BigDecimal;
 
-public class ItemsVendas {
+public class ItemsVendas extends Model {
 	private Venda venda;
 	private Produto produto;
 	private BigDecimal qtdVenda;
@@ -14,6 +14,11 @@ public class ItemsVendas {
 		this.qtdVenda = qtdVenda;
 	}
 
+	// ------------------------------------------------
+
+	// TODO: Método calcula valor do produto.
+
+	// ------------------------------------------------
 	public Venda getVenda() {
 		return venda;
 	}
@@ -36,11 +41,6 @@ public class ItemsVendas {
 
 	public void setQtd(BigDecimal qtdVenda) {
 		this.qtdVenda = qtdVenda;
-	}
-
-	@Override
-	public String toString() {
-		return "ItemsVendas [venda=" + venda + ", produto=" + produto + ", qtd=" + qtdVenda + "]";
 	}
 
 }
