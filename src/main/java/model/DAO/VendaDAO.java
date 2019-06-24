@@ -15,6 +15,16 @@ public class VendaDAO extends ModelDAO {
 		return ModelDAO.cast(dao.executeFindList("", new Venda()));
 	}
 
+	@SuppressWarnings("unchecked")
+	public static List<Venda> findListComanda(Long codComanda) throws Exception {
+		VendaDAO dao = new VendaDAO();
+		String sql = "";
+		sql += " AND codComanda = " + codComanda;
+		sql += " AND vldStatusVenda = 0";
+
+		return ModelDAO.cast(dao.executeFindList(sql, new Venda()));
+	}
+
 	public static Venda findById(Long codVenda) throws Exception {
 		VendaDAO dao = new VendaDAO();
 		return (Venda) dao.executeFindById(Venda.class, codVenda);

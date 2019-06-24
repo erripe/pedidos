@@ -29,7 +29,13 @@ public class ItemVenda extends Model {
 	private Long codProd;
 
 	@Column
-	private BigDecimal qtdVenda;
+	private String descProd;
+
+	@Column
+	private Long qtdVenda;
+
+	@Column
+	private BigDecimal valor;
 
 	public ItemVenda() {
 		super();
@@ -41,8 +47,12 @@ public class ItemVenda extends Model {
 		return ItemVendaDAO.findList();
 	}
 
-	public static ItemVenda findById(Long codItemVenda) throws Exception {
-		return ItemVendaDAO.findById(codItemVenda);
+	public static List<ItemVenda> findListVenda(Long codVenda) throws Exception {
+		return ItemVendaDAO.findListVenda(codVenda);
+	}
+
+	public static List<ItemVenda> findById(Long codVenda, Long codProduto) throws Exception {
+		return ItemVendaDAO.findById(codVenda, codProduto);
 	}
 
 	public boolean insert() throws Exception {
@@ -83,11 +93,28 @@ public class ItemVenda extends Model {
 		this.codProd = codProd;
 	}
 
-	public BigDecimal getQtdVenda() {
+	public Long getQtdVenda() {
 		return qtdVenda;
 	}
 
-	public void setQtdVenda(BigDecimal qtdVenda) {
+	public void setQtdVenda(Long qtdVenda) {
 		this.qtdVenda = qtdVenda;
 	}
+
+	public BigDecimal getValor() {
+		return valor;
+	}
+
+	public void setValor(BigDecimal valor) {
+		this.valor = valor;
+	}
+
+	public String getDescProd() {
+		return descProd;
+	}
+
+	public void setDescProd(String descProd) {
+		this.descProd = descProd;
+	}
+
 }

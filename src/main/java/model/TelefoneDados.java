@@ -5,7 +5,6 @@ public class TelefoneDados {
 	private String descTelefone;
 	private ETipoTelefone vldTipoTelefone;
 
-
 	public TelefoneDados(Long codTelefoneDados, String descTelefone, ETipoTelefone vldTipoTelefone) {
 		super();
 		this.codTelefoneDados = codTelefoneDados;
@@ -42,6 +41,7 @@ public class TelefoneDados {
 
 		private int value;
 
+		@SuppressWarnings("unused")
 		public int getValue() {
 			return this.value;
 		}

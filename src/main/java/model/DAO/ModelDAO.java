@@ -62,6 +62,7 @@ public class ModelDAO {
 		return true;
 	}
 
+	@SuppressWarnings("rawtypes")
 	public static <T> List cast(List<T> list) {
 		return list;
 	}

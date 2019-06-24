@@ -14,41 +14,43 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="300.0">
                      <children>
-                        <ListView layoutX="15.0" layoutY="132.0" prefHeight="200.0" prefWidth="200.0" />
-                        <Label alignment="TOP_LEFT" layoutX="14.0" layoutY="14.0" text="Vendas">
+                        <Label alignment="TOP_LEFT" layoutX="14.0" layoutY="14.0" text="Venda">
                            <font>
                               <Font name="Arial Bold" size="31.0" />
                            </font>
                         </Label>
-                        <Label layoutX="16.0" layoutY="114.0" text="Items" />
-                        <Label layoutX="14.0" layoutY="61.0" text="Comanda" />
-                        <Label layoutX="16.0" layoutY="332.0" prefHeight="17.0" prefWidth="67.0" text="Valor" />
-                        <Button layoutX="463.0" layoutY="467.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="133.0" text="FINALIZAR" />
+                        <Label layoutX="14.0" layoutY="46.0" prefHeight="35.0" prefWidth="127.0" text="Comanda">
+                           <font>
+                              <Font name="System Bold" size="21.0" />
+                           </font></Label>
+                        <Button layoutX="508.0" layoutY="493.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="133.0" text="FINALIZAR" />
                         <Accordion layoutX="401.0" layoutY="123.0" />
-                        <Label alignment="CENTER_RIGHT" layoutX="15.0" layoutY="353.0" prefHeight="36.0" prefWidth="201.0" text="0">
-                           <font>
-                              <Font name="Arial Bold" size="31.0" />
-                           </font>
-                        </Label>
-                        <Label alignment="TOP_LEFT" layoutX="14.0" layoutY="78.0" prefHeight="36.0" prefWidth="201.0" text="1">
-                           <font>
-                              <Font name="Arial Bold" size="31.0" />
-                           </font>
-                        </Label>
-                        <Button layoutX="328.0" layoutY="467.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="133.0" text="FINALIZAR" />
+                        <Button layoutX="366.0" layoutY="493.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="133.0" text="LIMPAR" />
                         <Accordion layoutX="337.0" layoutY="132.0" />
-                        <VBox layoutX="311.0" layoutY="84.0" prefHeight="296.0" prefWidth="305.0">
-                           <children>
-                              <HBox prefHeight="100.0" prefWidth="200.0">
-                                 <children>
-                                    <Button mnemonicParsing="false" prefHeight="64.0" prefWidth="97.0" text="COMIDAS" />
-                                    <Button mnemonicParsing="false" prefHeight="64.0" prefWidth="97.0" text="BEBIDAS" />
-                                    <Button mnemonicParsing="false" prefHeight="64.0" prefWidth="97.0" text="OUTROS" />
-                                 </children>
-                              </HBox>
-                              <ImageView fitHeight="156.0" fitWidth="258.0" pickOnBounds="true" preserveRatio="true" />
-                           </children>
-                        </VBox>
+                        <TableView fx:id="tableViewVenda" layoutX="273.0" layoutY="127.0" onMouseClicked="#tableViewVendaInsert" prefHeight="222.0" prefWidth="368.0">
+                           <columns>
+                              <TableColumn fx:id="codProdVenda" prefWidth="59.0" text="Cod." />
+                              <TableColumn fx:id="descProdVenda" prefWidth="197.0" text="Desc." />
+                              <TableColumn fx:id="valorCompraVenda" prefWidth="111.0" text="Valor" />
+                           </columns>
+                        </TableView>
+                        <TextField fx:id="tfDescProdVenda" layoutX="404.0" layoutY="93.0" prefHeight="27.0" prefWidth="164.0" />
+                        <TextField fx:id="tfCodProdVenda" layoutX="273.0" layoutY="93.0" onKeyPressed="#verifNumCodPrdVenda" prefHeight="27.0" prefWidth="127.0" />
+                        <Label layoutX="404.0" layoutY="60.0" prefHeight="28.0" prefWidth="121.0" text="Descrição" />
+                        <Label layoutX="273.0" layoutY="60.0" prefHeight="28.0" prefWidth="121.0" text="Cod. Produto" />
+                        <Button fx:id="findBtnVenda" layoutX="541.0" layoutY="356.0" minHeight="10.0" minWidth="100.0" mnemonicParsing="false" onAction="#findBtnVenda" text="Buscar" />
+                        <TableView fx:id="tableViewCarrinho" layoutX="13.0" layoutY="127.0" onMouseClicked="#tableViewCarrinhoDelete" prefHeight="222.0" prefWidth="253.0">
+                           <columns>
+                              <TableColumn fx:id="qtd" prefWidth="59.0" text="Qtd" />
+                              <TableColumn fx:id="descProdCarrinho" prefWidth="135.0" text="Desc." />
+                              <TableColumn fx:id="valorCompraCarrinho" prefWidth="58.0" text="Valor" />
+                           </columns>
+                        </TableView>
+                        <TextField fx:id="tfCodComanda" layoutX="13.0" layoutY="81.0" onAction="#tfCodComanda" onKeyPressed="#verifNumCodComanda" prefHeight="36.0" prefWidth="184.0">
+                           <font>
+                              <Font name="System Bold" size="19.0" />
+                           </font>
+                        </TextField>
                      </children>
                   </AnchorPane>
             </content>

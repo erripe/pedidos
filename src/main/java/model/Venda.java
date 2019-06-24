@@ -41,6 +41,10 @@ public class Venda extends Model {
 		return VendaDAO.findList();
 	}
 
+	public static List<Venda> findListComanda(Long codComanda) throws Exception {
+		return VendaDAO.findListComanda(codComanda);
+	}
+
 	public static Venda findById(Long codVenda) throws Exception {
 		return VendaDAO.findById(codVenda);
 	}
@@ -103,6 +107,7 @@ public class Venda extends Model {
 		this.vldStatusVenda = vldStatusVenda;
 	}
 
+	@SuppressWarnings("unused")
 	private enum EStatusVenda {
 		ABERTA(0), PAGA(1);
 

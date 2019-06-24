@@ -67,22 +67,4 @@ public class Comanda extends Model {
 	}
 
 	// ------------------------------------------------
-
-	private enum EnumStatusComanda {
-		LIVRE(0), OCUPADA(1);
-
-		private int value;
-
-		public int getValue() {
-			return this.value;
-		}
-
-		public void setValue(int value) {
-			this.value = value;
-		}
-
-		private EnumStatusComanda(int i) {
-			this.value = i;
-		}
-	}
 }

@@ -15,7 +15,9 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import model.ItemVenda;
 import model.Produto;
 import service.MainService;
 
@@ -31,6 +33,12 @@ public class MainController {
 	private TableView<Produto> tableView;
 
 	@FXML
+	private TableView<ItemVenda> tableViewCarrinho;
+
+	@FXML
+	private TableView<Produto> tableViewVenda;
+
+	@FXML
 	private TableColumn<Produto, Long> codProd;
 
 	@FXML
@@ -43,7 +51,28 @@ public class MainController {
 	private TableColumn<Produto, Long> codFornecedor;
 
 	@FXML
+	private TableColumn<Produto, Long> codProdVenda;
+
+	@FXML
+	private TableColumn<Produto, String> descProdVenda;
+
+	@FXML
+	private TableColumn<Produto, BigDecimal> valorCompraVenda;
+
+	@FXML
+	private TableColumn<ItemVenda, Long> qtd;
+
+	@FXML
+	private TableColumn<ItemVenda, String> descProdCarrinho;
+
+	@FXML
+	private TableColumn<ItemVenda, BigDecimal> valorCompraCarrinho;
+
+	@FXML
 	private Button findBtn;
+
+	@FXML
+	private Button findBtnVenda;
 
 	@FXML
 	private Button postBtn;
@@ -67,6 +96,12 @@ public class MainController {
 	private TextField tfDescProd;
 
 	@FXML
+	private TextField tfCodProdVenda;
+
+	@FXML
+	private TextField tfDescProdVenda;
+
+	@FXML
 	private TextField tfEditCodProd;
 
 	@FXML
@@ -79,29 +114,79 @@ public class MainController {
 	private TextField tfEditValue;
 
 	@FXML
+	private TextField tfCodComanda;
+
+	@FXML
 	private Pane putPanel;
 
 	MainService service = new MainService();
 
 	@FXML
 	public void initialize() {
-		assert tfCodProd != null : "fx:id=\"tfCodProd\" was not injected: check your FXML file 'Main.fxml'.";
 		assert postBtn != null : "fx:id=\"postBtn\" was not injected: check your FXML file 'Main.fxml'.";
 		assert tableView != null : "fx:id=\"listProd\" was not injected: check your FXML file 'Main.fxml'.";
 		assert findBtn != null : "fx:id=\"findBtn\" was not injected: check your FXML file 'Main.fxml'.";
 		assert delBtn != null : "fx:id=\"delBtn\" was not injected: check your FXML file 'Main.fxml'.";
 		assert putBtn != null : "fx:id=\"putBtn\" was not injected: check your FXML file 'Main.fxml'.";
+		assert tfCodProd != null : "fx:id=\"tfCodProd\" was not injected: check your FXML file 'Main.fxml'.";
 		assert tfDescProd != null : "fx:id=\"tfDescProd\" was not injected: check your FXML file 'Main.fxml'.";
+		assert tfCodProdVenda != null : "fx:id=\"tfCodProd\" was not injected: check your FXML file 'Main.fxml'.";
+		assert tfDescProdVenda != null : "fx:id=\"tfDescProd\" was not injected: check your FXML file 'Main.fxml'.";
 
-		codProd.setCellValueFactory(new PropertyValueFactory<>("codProd"));
-		descProd.setCellValueFactory(new PropertyValueFactory<>("descProd"));
-		valorCompra.setCellValueFactory(new PropertyValueFactory<>("valorCompra"));
-		codFornecedor.setCellValueFactory(new PropertyValueFactory<>("codFornecedor"));
+		codProd.setCellValueFactory(new PropertyValueFactory<Produto, Long>("codProd"));
+		descProd.setCellValueFactory(new PropertyValueFactory<Produto, String>("descProd"));
+		valorCompra.setCellValueFactory(new PropertyValueFactory<Produto, BigDecimal>("valorCompra"));
+		codFornecedor.setCellValueFactory(new PropertyValueFactory<Produto, Long>("codFornecedor"));
+
+		codProdVenda.setCellValueFactory(new PropertyValueFactory<Produto, Long>("codProd"));
+		descProdVenda.setCellValueFactory(new PropertyValueFactory<Produto, String>("descProd"));
+		valorCompraVenda.setCellValueFactory(new PropertyValueFactory<Produto, BigDecimal>("valorCompra"));
+
+		qtd.setCellValueFactory(new PropertyValueFactory<ItemVenda, Long>("qtdVenda"));
+		descProdCarrinho.setCellValueFactory(new PropertyValueFactory<ItemVenda, String>("descProd"));
+		valorCompraCarrinho.setCellValueFactory(new PropertyValueFactory<ItemVenda, BigDecimal>("valor"));
+
 	}
+
+	// --------------- ABA VENDA ------------------
 
 	@FXML
 	private void teste(ActionEvent event) {
+		msgSucess();
 	}
+
+	@FXML
+	private void tableViewVendaInsert(MouseEvent event) throws NumberFormatException, Exception {
+		service.vendaInsertProduto(Long.parseLong(tfCodComanda.getText()), //
+				tableViewVenda.getSelectionModel().getSelectedItem());
+		tableViewCarrinho.getItems().clear();
+		tableViewCarrinho.getItems().addAll( //
+				service.vendaFindList(Long.parseLong(tfCodComanda.getText())));
+	}
+
+	@FXML
+	private void tableViewCarrinhoDelete(MouseEvent event) throws NumberFormatException, Exception {
+		service.vendaDeletarProduto(Long.parseLong(tfCodComanda.getText()), //
+				tableViewCarrinho.getSelectionModel().getSelectedItem());
+		tableViewCarrinho.getItems().clear();
+		tableViewCarrinho.getItems().addAll( //
+				service.vendaFindList(Long.parseLong(tfCodComanda.getText())));
+	}
+
+	@FXML
+	private void findBtnVenda(ActionEvent event) throws Exception {
+		tableViewVenda.getItems().clear();
+		tableViewVenda.getItems().addAll(service.produtoFindList(tfCodProdVenda.getText(), tfDescProdVenda.getText()));
+	}
+
+	@FXML
+	private void tfCodComanda(ActionEvent event) throws Exception {
+		tableViewCarrinho.getItems().clear();
+		tableViewCarrinho.getItems().addAll( //
+				service.vendaFindList(Long.parseLong(tfCodComanda.getText())));
+	}
+
+	// --------------- ABA PRODUTOS ------------------
 
 	@FXML
 	private void findBtn(ActionEvent event) throws Exception {
@@ -217,6 +302,17 @@ public class MainController {
 	}
 
 	@FXML
+	void verifNumCodPrdVenda(KeyEvent event) {
+		tfCodProdVenda.textProperty().addListener(new ChangeListener<String>() {
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				if (!newValue.matches("\\d*")) {
+					tfCodProdVenda.setText(newValue.replaceAll("[^\\d]", ""));
+				}
+			}
+		});
+	}
+
+	@FXML
 	void verifNumCodFornecedor(KeyEvent event) {
 		tfEditCodFornecedor.textProperty().addListener(new ChangeListener<String>() {
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
@@ -233,6 +329,17 @@ public class MainController {
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 				if (!newValue.matches("\\d*")) {
 					tfEditValue.setText(newValue.replaceAll("[^.\\d]", ""));
+				}
+			}
+		});
+	}
+
+	@FXML
+	void verifNumCodComanda(KeyEvent event) {
+		tfCodComanda.textProperty().addListener(new ChangeListener<String>() {
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				if (!newValue.matches("\\d*")) {
+					tfCodComanda.setText(newValue.replaceAll("[^\\d]", ""));
 				}
 			}
 		});

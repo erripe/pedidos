@@ -15,9 +15,21 @@ public class ItemVendaDAO extends ModelDAO {
 		return ModelDAO.cast(dao.executeFindList("", new ItemVenda()));
 	}
 
-	public static ItemVenda findById(Long codItemVenda) throws Exception {
+	@SuppressWarnings("unchecked")
+	public static List<ItemVenda> findListVenda(Long codVenda) throws Exception {
 		ItemVendaDAO dao = new ItemVendaDAO();
-		return (ItemVenda) dao.executeFindById(ItemVenda.class, codItemVenda);
+		String sql = "";
+		sql += " AND codVenda = " + codVenda;
+		return ModelDAO.cast(dao.executeFindList(sql, new ItemVenda()));
+	}
+
+	@SuppressWarnings("unchecked")
+	public static List<ItemVenda> findById(Long codVenda, Long codProduto) throws Exception {
+		ItemVendaDAO dao = new ItemVendaDAO();
+		String sql = "";
+		sql += " AND codVenda = " + codVenda;
+		sql += " AND codProduto = " + codVenda;
+		return ModelDAO.cast(dao.executeFindList(sql, new ItemVenda()));
 	}
 
 	public static boolean insert(ItemVenda obj) throws Exception {
