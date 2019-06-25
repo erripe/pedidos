@@ -1,6 +1,7 @@
 package controller;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -87,6 +88,9 @@ public class MainController {
 	private Button saveBtn;
 
 	@FXML
+	private Button finalizeBtn;
+
+	@FXML
 	private Button putBackBtn;
 
 	@FXML
@@ -114,6 +118,9 @@ public class MainController {
 	private TextField tfEditValue;
 
 	@FXML
+	private TextField tfValor;
+
+	@FXML
 	private TextField tfCodComanda;
 
 	@FXML
@@ -128,6 +135,7 @@ public class MainController {
 		assert findBtn != null : "fx:id=\"findBtn\" was not injected: check your FXML file 'Main.fxml'.";
 		assert delBtn != null : "fx:id=\"delBtn\" was not injected: check your FXML file 'Main.fxml'.";
 		assert putBtn != null : "fx:id=\"putBtn\" was not injected: check your FXML file 'Main.fxml'.";
+		assert finalizeBtn != null : "fx:id=\"putBtn\" was not injected: check your FXML file 'Main.fxml'.";
 		assert tfCodProd != null : "fx:id=\"tfCodProd\" was not injected: check your FXML file 'Main.fxml'.";
 		assert tfDescProd != null : "fx:id=\"tfDescProd\" was not injected: check your FXML file 'Main.fxml'.";
 		assert tfCodProdVenda != null : "fx:id=\"tfCodProd\" was not injected: check your FXML file 'Main.fxml'.";
@@ -157,33 +165,79 @@ public class MainController {
 
 	@FXML
 	private void tableViewVendaInsert(MouseEvent event) throws NumberFormatException, Exception {
-		service.vendaInsertProduto(Long.parseLong(tfCodComanda.getText()), //
-				tableViewVenda.getSelectionModel().getSelectedItem());
-		tableViewCarrinho.getItems().clear();
-		tableViewCarrinho.getItems().addAll( //
-				service.vendaFindList(Long.parseLong(tfCodComanda.getText())));
+		if (validateField(tfCodComanda, "Comanda") && !tableViewVenda.getItems().isEmpty()) {
+			service.vendaInsertProduto(Long.parseLong(tfCodComanda.getText()), //
+					tableViewVenda.getSelectionModel().getSelectedItem());
+			tableViewCarrinho.getItems().clear();
+			tableViewCarrinho.getItems().addAll( //
+					service.vendaFindList(Long.parseLong(tfCodComanda.getText())));
+			updateValue();
+		}
 	}
 
 	@FXML
 	private void tableViewCarrinhoDelete(MouseEvent event) throws NumberFormatException, Exception {
-		service.vendaDeletarProduto(Long.parseLong(tfCodComanda.getText()), //
-				tableViewCarrinho.getSelectionModel().getSelectedItem());
-		tableViewCarrinho.getItems().clear();
-		tableViewCarrinho.getItems().addAll( //
-				service.vendaFindList(Long.parseLong(tfCodComanda.getText())));
+		if (validateField(tfCodComanda, "Comanda") && !tableViewCarrinho.getItems().isEmpty()) {
+			service.vendaDeletarProduto(Long.parseLong(tfCodComanda.getText()), //
+					tableViewCarrinho.getSelectionModel().getSelectedItem());
+			tableViewCarrinho.getItems().clear();
+			tableViewCarrinho.getItems().addAll( //
+					service.vendaFindList(Long.parseLong(tfCodComanda.getText())));
+			updateValue();
+		}
 	}
 
 	@FXML
 	private void findBtnVenda(ActionEvent event) throws Exception {
-		tableViewVenda.getItems().clear();
-		tableViewVenda.getItems().addAll(service.produtoFindList(tfCodProdVenda.getText(), tfDescProdVenda.getText()));
+		if (validateField(tfCodComanda, "Comanda")) {
+			tableViewVenda.getItems().clear();
+			tableViewVenda.getItems()
+					.addAll(service.produtoFindList(tfCodProdVenda.getText(), tfDescProdVenda.getText()));
+		}
 	}
 
 	@FXML
 	private void tfCodComanda(ActionEvent event) throws Exception {
-		tableViewCarrinho.getItems().clear();
-		tableViewCarrinho.getItems().addAll( //
-				service.vendaFindList(Long.parseLong(tfCodComanda.getText())));
+		if (validateField(tfCodComanda, "Comanda")) {
+			tableViewCarrinho.getItems().clear();
+			tableViewCarrinho.getItems().addAll( //
+					service.vendaFindList(Long.parseLong(tfCodComanda.getText())));
+			updateValue();
+
+		}
+	}
+
+	@FXML
+	private void finalizeBtn(ActionEvent event) throws Exception {
+		if (validateField(tfCodComanda, "Comanda")) {
+			boolean sucess;
+			sucess = service.finalizeVenda(Long.parseLong(tfCodComanda.getText()));
+			tfCodComanda(event);
+			if (sucess) {
+				msgSucess();
+			}
+		}
+	}
+
+	public boolean validateField(TextField obj, String campo) {
+		if (obj.getText().equals("")) {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Error");
+			alert.setHeaderText(null);
+			alert.setContentText("Selecione um valor para " + campo + "!");
+			alert.showAndWait();
+			return false;
+		}
+		return true;
+	}
+
+	public void updateValue() throws NumberFormatException, Exception {
+		List<ItemVenda> list = service.vendaFindList(Long.parseLong(tfCodComanda.getText()));
+		BigDecimal value = new BigDecimal(0);
+		for (ItemVenda itemVenda : list) {
+			value = value.add(itemVenda.getValor());
+		}
+		tfValor.setText(value.toString());
 	}
 
 	// --------------- ABA PRODUTOS ------------------
@@ -196,10 +250,18 @@ public class MainController {
 
 	@FXML
 	private void delBtn(ActionEvent event) throws Exception {
-		boolean sucess;
+		boolean sucess = false;
 
-		sucess = service.produtoDel(tableView.getSelectionModel().getSelectedItem());
-		findBtn(event);
+		if (tableView.getSelectionModel().isEmpty()) {
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Error");
+			alert.setHeaderText(null);
+			alert.setContentText("Selecione um registro para excluir!");
+			alert.showAndWait();
+		} else {
+			sucess = service.produtoDel(tableView.getSelectionModel().getSelectedItem());
+			findBtn(event);
+		}
 
 		if (sucess) {
 			msgSucess();

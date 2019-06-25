@@ -1,6 +1,8 @@
 package service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import model.ItemVenda;
@@ -87,6 +89,21 @@ public class MainService {
 
 	public boolean produtoEdit(Produto prd) throws Exception {
 		return prd.update();
+	}
+
+	public boolean finalizeVenda(long codComanda) throws Exception {
+		List<Venda> list = Venda.findListComanda(codComanda);
+		Venda v = list.get(0);
+		List<ItemVenda> listItem = ItemVenda.findListVenda(v.getCodVenda());
+		BigDecimal value = new BigDecimal(0);
+		for (ItemVenda itemVenda : listItem) {
+			BigDecimal itemValue = itemVenda.getValor();
+			value = value.add(itemValue);
+		}
+		v.setPrecoTotal(value);
+		v.setDataVenda(new Date());
+		v.setVldStatusVenda(1L);
+		return v.update();
 	}
 
 }

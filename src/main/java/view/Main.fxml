@@ -23,7 +23,7 @@
                            <font>
                               <Font name="System Bold" size="21.0" />
                            </font></Label>
-                        <Button layoutX="508.0" layoutY="493.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="133.0" text="FINALIZAR" />
+                        <Button fx:id="finalizeBtn" layoutX="508.0" layoutY="493.0" mnemonicParsing="false" onAction="#finalizeBtn" prefHeight="51.0" prefWidth="133.0" text="FINALIZAR" />
                         <Accordion layoutX="401.0" layoutY="123.0" />
                         <Button layoutX="366.0" layoutY="493.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="133.0" text="LIMPAR" />
                         <Accordion layoutX="337.0" layoutY="132.0" />
@@ -47,6 +47,11 @@
                            </columns>
                         </TableView>
                         <TextField fx:id="tfCodComanda" layoutX="13.0" layoutY="81.0" onAction="#tfCodComanda" onKeyPressed="#verifNumCodComanda" prefHeight="36.0" prefWidth="184.0">
+                           <font>
+                              <Font name="System Bold" size="19.0" />
+                           </font>
+                        </TextField>
+                        <TextField fx:id="tfValor" alignment="CENTER_RIGHT" editable="false" layoutX="82.0" layoutY="356.0" onKeyPressed="#verifNumCodComanda" prefHeight="36.0" prefWidth="184.0">
                            <font>
                               <Font name="System Bold" size="19.0" />
                            </font>
